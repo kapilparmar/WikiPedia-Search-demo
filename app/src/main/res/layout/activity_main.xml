@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="parmar.kapil.wikidemo.MainActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/wiki_image"
+        android:id="@+id/wiki_image"
+        android:layout_below="@+id/rlsearch"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rlsearch"
+        android:background="@drawable/gradient_bg">
+    <EditText
+        android:id="@+id/edt_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="Search Wikipedia"
+        android:drawableLeft="@drawable/ic_search"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_border"
+        android:layout_margin="10dp"/>
+    <ProgressBar
+        style="?android:attr/progressBarStyleSmall"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignTop="@id/edt_search"
+        android:layout_alignBottom="@id/edt_search"
+        android:layout_alignRight="@id/edt_search"
+        android:id="@+id/progress"
+        android:visibility="gone"/>
+</RelativeLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listview"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector"
+        android:layout_below="@+id/rlsearch"
+        android:layout_above="@+id/developer">
+
+    </ListView>
+
+
+</RelativeLayout>

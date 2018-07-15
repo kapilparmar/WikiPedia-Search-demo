@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">WikiDemo</string>
+    <string name="title_activity_web_result">Wikipedia Result</string>
+</resources>
