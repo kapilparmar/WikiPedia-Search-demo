@@ -13,7 +13,7 @@ public class SplashActivity extends AppCompatActivity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(1000);
+                    sleep(500);
 
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(i);

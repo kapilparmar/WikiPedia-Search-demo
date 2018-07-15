@@ -1,6 +1,8 @@
 package parmar.kapil.wikidemo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +34,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     String searchName = "";
-   String strUrl;
+    String strUrl;
     ProgressBar progressBar;
 
     EditText edtSearch;
@@ -63,21 +66,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
-                if (edtSearch.getText().toString().length()>0) {
-                    wiKiImage.setVisibility(View.GONE);
-                    listView.setVisibility(View.VISIBLE);
-                    searchName = edtSearch.getText().toString();
-                    strUrl = "https://en.wikipedia.org//w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=50&pilimit=10&wbptterms=description&gpssearch=" + searchName + "&gpslimit=10";
-                    new GetWikiData().execute();
-                }
-                else {
+                if (isNetworkConnected()) {
+                    if (edtSearch.getText().toString().length() > 0) {
+                        wiKiImage.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        searchName = edtSearch.getText().toString();
+                        strUrl = "https://en.wikipedia.org//w/api.php?action=query&format=json&prop=pageimages%7Cpageterms&generator=prefixsearch&redirects=1&formatversion=2&piprop=thumbnail&pithumbsize=50&pilimit=10&wbptterms=description&gpssearch=" + searchName + "&gpslimit=10";
+                        new GetWikiData().execute();
+                    } else {
 
-                    listView.setAdapter(null);
-                    listView.setVisibility(View.GONE);
-                    wiKiImage.setVisibility(View.VISIBLE);
+                        listView.setAdapter(null);
+                        listView.setVisibility(View.GONE);
+                        wiKiImage.setVisibility(View.VISIBLE);
 
+                    }
                 }
+                else
+                    Toast.makeText(getApplicationContext(),"No Inernet Connection",Toast.LENGTH_LONG).show();
             }
+
         });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -92,6 +99,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
+    }
+
 
     public class GetWikiData extends AsyncTask<String, String,String>{
 
@@ -162,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         DescrString =  jsonObjectTerms.getString("description").replace("[","").replace("]","").toString();
                     }
 
-                     dataModels.add(new DataModel(jsonObject.getString("title"), DescrString,imageString));
+                    dataModels.add(new DataModel(jsonObject.getString("title"), DescrString,imageString));
 
 
                 }
